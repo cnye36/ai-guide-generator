@@ -1,0 +1,14 @@
+{
+  "name": "guide-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-powered guide and tutorial generator",
+  "scripts": {
+    "dev": "pnpm --parallel -r dev",
+    "build": "pnpm -r build",
+    "clean": "pnpm -r clean"
+  },
+  "keywords": ["ai", "guide", "tutorial", "content-generation"],
+  "author": "Curtis",
+  "license": "MIT"
+}
