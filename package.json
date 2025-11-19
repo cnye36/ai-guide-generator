@@ -8,7 +8,15 @@
     "build": "pnpm -r build",
     "clean": "pnpm -r clean"
   },
-  "keywords": ["ai", "guide", "tutorial", "content-generation"],
+  "keywords": [
+    "ai",
+    "guide",
+    "tutorial",
+    "content-generation"
+  ],
   "author": "Curtis",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^12.4.1"
+  }
 }

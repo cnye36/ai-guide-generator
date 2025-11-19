@@ -39,3 +39,8 @@ coverage/
 tmp/
 temp/
 *.tmp
+
+# Database
+packages/backend/data/*.db
+packages/backend/data/*.db-wal
+packages/backend/data/*.db-shm

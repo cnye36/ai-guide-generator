@@ -2,7 +2,14 @@ import React from 'react';
 import { useAppStore } from '../store/app.store';
 
 export const InputForm: React.FC = () => {
-  const { topic, preferences, setTopic, setPreferences, isGenerating } = useAppStore();
+  const {
+    topic,
+    preferences,
+    setTopic,
+    setPreferences,
+    isGenerating,
+    isViewingGuide,
+  } = useAppStore();
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
@@ -39,7 +46,7 @@ export const InputForm: React.FC = () => {
             value={preferences.depth}
             onChange={(e) => setPreferences({ depth: e.target.value as any })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            disabled={isGenerating}
+            disabled={isGenerating || isViewingGuide}
           >
             <option value="quick">Quick Overview</option>
             <option value="standard">Standard</option>
@@ -55,9 +62,11 @@ export const InputForm: React.FC = () => {
           </label>
           <select
             value={preferences.audience}
-            onChange={(e) => setPreferences({ audience: e.target.value as any })}
+            onChange={(e) =>
+              setPreferences({ audience: e.target.value as any })
+            }
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            disabled={isGenerating}
+            disabled={isGenerating || isViewingGuide}
           >
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
@@ -75,7 +84,7 @@ export const InputForm: React.FC = () => {
             value={preferences.style}
             onChange={(e) => setPreferences({ style: e.target.value as any })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            disabled={isGenerating}
+            disabled={isGenerating || isViewingGuide}
           >
             <option value="tutorial">Tutorial (Step-by-step)</option>
             <option value="conceptual">Conceptual</option>
@@ -92,7 +101,7 @@ export const InputForm: React.FC = () => {
             value={preferences.length}
             onChange={(e) => setPreferences({ length: e.target.value as any })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            disabled={isGenerating}
+            disabled={isGenerating || isViewingGuide}
           >
             <option value="short">Short (500-1000 words)</option>
             <option value="medium">Medium (1000-2000 words)</option>
@@ -109,7 +118,7 @@ export const InputForm: React.FC = () => {
             value={preferences.format}
             onChange={(e) => setPreferences({ format: e.target.value as any })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            disabled={isGenerating}
+            disabled={isGenerating || isViewingGuide}
           >
             <option value="blog-post">Blog Post</option>
             <option value="social-media">Social Media Thread</option>
@@ -127,7 +136,7 @@ export const InputForm: React.FC = () => {
             value={preferences.tone}
             onChange={(e) => setPreferences({ tone: e.target.value as any })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            disabled={isGenerating}
+            disabled={isGenerating || isViewingGuide}
           >
             <option value="professional">Professional</option>
             <option value="casual">Casual</option>

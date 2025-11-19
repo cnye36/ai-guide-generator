@@ -2,6 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import { config, validateConfig } from './config';
 import apiRoutes from './routes/api.routes';
+import { getDatabase, closeDatabase } from './database/database';
+
+// Initialize database
+getDatabase();
 
 // Validate configuration on startup
 try {
@@ -49,10 +53,21 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 
 // Start server
 const port = config.port;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
   console.log(`📝 Environment: ${config.nodeEnv}`);
   console.log(`🔧 CORS enabled for: ${config.corsOrigin}`);
+  console.log(`💾 Database initialized`);
+});
+
+// Graceful shutdown
+process.on('SIGINT', () => {
+  console.log('\n🛑 Shutting down gracefully...');
+  closeDatabase();
+  server.close(() => {
+    console.log('✅ Server closed');
+    process.exit(0);
+  });
 });
 
 export default app;

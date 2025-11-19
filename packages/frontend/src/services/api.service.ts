@@ -16,12 +16,12 @@ export const apiService = {
    */
   async generateGuide(request: GenerateGuideRequest): Promise<GeneratedGuide> {
     const response = await apiClient.post<ApiResponse<GeneratedGuide>>(
-      '/generate',
+      "/generate",
       request
     );
 
     if (!response.data.success || !response.data.data) {
-      throw new Error(response.data.error || 'Failed to generate guide');
+      throw new Error(response.data.error || "Failed to generate guide");
     }
 
     return response.data.data;
@@ -31,12 +31,73 @@ export const apiService = {
    * Research a topic (without generating content)
    */
   async researchTopic(topic: string): Promise<any> {
-    const response = await apiClient.post<ApiResponse<any>>('/research', {
+    const response = await apiClient.post<ApiResponse<any>>("/research", {
       topic,
     });
 
     if (!response.data.success) {
-      throw new Error(response.data.error || 'Failed to research topic');
+      throw new Error(response.data.error || "Failed to research topic");
+    }
+
+    return response.data.data;
+  },
+
+  /**
+   * Get all guides
+   */
+  async getAllGuides(): Promise<GeneratedGuide[]> {
+    const response = await apiClient.get<ApiResponse<GeneratedGuide[]>>(
+      "/guides"
+    );
+
+    if (!response.data.success || !response.data.data) {
+      throw new Error(response.data.error || "Failed to fetch guides");
+    }
+
+    return response.data.data;
+  },
+
+  /**
+   * Get a specific guide by ID
+   */
+  async getGuide(id: string): Promise<GeneratedGuide> {
+    const response = await apiClient.get<ApiResponse<GeneratedGuide>>(
+      `/guides/${id}`
+    );
+
+    if (!response.data.success || !response.data.data) {
+      throw new Error(response.data.error || "Failed to fetch guide");
+    }
+
+    return response.data.data;
+  },
+
+  /**
+   * Delete a guide by ID
+   */
+  async deleteGuide(id: string): Promise<void> {
+    const response = await apiClient.delete<ApiResponse<{ message: string }>>(
+      `/guides/${id}`
+    );
+
+    if (!response.data.success) {
+      throw new Error(response.data.error || "Failed to delete guide");
+    }
+  },
+
+  /**
+   * Edit a guide using AI based on user instruction
+   */
+  async editGuide(id: string, instruction: string): Promise<GeneratedGuide> {
+    const response = await apiClient.post<ApiResponse<GeneratedGuide>>(
+      `/guides/${id}/edit`,
+      {
+        instruction,
+      }
+    );
+
+    if (!response.data.success || !response.data.data) {
+      throw new Error(response.data.error || "Failed to edit guide");
     }
 
     return response.data.data;
@@ -47,7 +108,7 @@ export const apiService = {
    */
   async healthCheck(): Promise<boolean> {
     try {
-      const response = await apiClient.get('/health');
+      const response = await apiClient.get("/health");
       return response.data.success === true;
     } catch {
       return false;
